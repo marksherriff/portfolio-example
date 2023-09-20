@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
+import os
+import secrets
 from pathlib import Path
+
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,14 +86,11 @@ WSGI_APPLICATION = "personal_portfolio.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd25pjmgkiph1ja',
-        'USER': 'msxmajlhlrnxxo',
-        'PASSWORD': '1dd10b089526192bd0a513e7ad6b0a922160f7f660646e86a8c52df06e68dae6',
-        'HOST': 'ec2-54-83-138-228.compute-1.amazonaws.com',
-        'PORT':  '5432',
-    },
+    "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
     "local": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
